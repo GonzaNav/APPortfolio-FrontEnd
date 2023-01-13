@@ -1,0 +1,11 @@
+<section class="fixed-top bg-dark">
+  <div class="container d-flex justify-content-between align-items-center">
+      <div class="logo">
+          <img id="logoAP" src="../../../assets/logoAP.png" alt="Logo Argentina Programa-INTI">
+      </div>
+      <div class="redes">
+          <button type="button" class="btn btn-outline-light btn-sm" (click)="login()" *ngIf="!isLogged">Ingresar</button>
+          <button type="button" class="btn btn-outline-light btn-sm" (click)="onLogout()" *ngIf="isLogged">Salir</button>
+      </div>
+  </div>
+</section>

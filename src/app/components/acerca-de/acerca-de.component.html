@@ -1,0 +1,25 @@
+<section>
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+            <img src="../../../assets/mifoto.jpg" alt="AcercaDeMi" class="img-fluid" id="fotoDePerfil">
+        </div>
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+            <p class="miNombre">{{persona.nombre}} {{persona.apellido}}</p>
+            <p>{{persona.titulo}}</p>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <span>
+                <h1>Acerca de mí</h1>
+                <p>{{persona.descripcion}}</p>
+            </span>
+            <button (click)="abrirModal(persona.id!)" type="button" class="btn btn-warning">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 25px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+              </svg>
+            </button>
+        </div>
+    </div>
+  </div>
+</section>
+<app-editarinfo [idSeleccionado]="idSeleccionado"></app-editarinfo>

@@ -1,0 +1,69 @@
+<div class="modal fade" id="modal-actualizar-educacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered justify-content-center">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Actualizar estudios</h3>
+        <button type="button" class="btn-close bg-white rounded-circle mb-4" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="educacionForm" (ngSubmit)="updateEduc()" novalidate #form="ngForm">
+          <div class="form-group m-3">
+            <label for="nombreEduc">Nombre de la Empresa/Organización</label>
+            <input type="text" class="form-control" id="nombreEduc" name="nombreEduc" formControlName="nombreEduc">
+          </div>
+          <div *ngIf="nombreEduc?.errors && nombreEduc?.touched">
+            <div *ngIf="nombreEduc?.hasError('required')" class="alert alert-danger" role="alert">
+              Debe ingresar el nombre de la empresa u organización.
+            </div>
+          </div>
+          <div class="form-group m-3">
+            <label for="institucionEduc">Institución Formadora</label>
+            <input type="text" class="form-control" id="institucionEduc" name="institucionEduc" formControlName="institucionEduc">
+          </div>
+          <div *ngIf="institucionEduc?.errors && institucionEduc?.touched">
+            <div *ngIf="institucionEduc?.hasError('required')" class="alert alert-danger" role="alert">
+              Debe ingresar el nombre de la institucion.
+            </div>
+          </div>
+          <div class="form-group m-3">
+            <label for="descripcionEduc">Descripción del curso/carrera</label>
+            <textarea rows="5" type="text" class="form-control" id="descripcionEduc" name="descripcionEduc" formControlName="descripcionEduc"></textarea>
+          </div>
+          <div *ngIf="descripcionEduc?.errors && descripcionEduc?.touched">
+            <div *ngIf="descripcionEduc?.hasError('required')" class="alert alert-danger" role="alert">
+              Debe agregar la descripción del curso/carrera.
+            </div>
+          </div>
+          <div class="d-flex">
+            <div>
+              <div class="form-group m-3">
+                <label for="fechaInicio">Fecha Inicio</label>
+                <input type="text" class="form-control" id="fechaInicio" name="fechaInicio" formControlName="fechaInicio">
+              </div>
+              <div *ngIf="fechaInicio?.errors && fechaInicio?.touched">
+                <div *ngIf="fechaInicio?.hasError('required')" class="alert alert-danger" role="alert">
+                  Debe ingresar la fecha de comienzo en la institucion.
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="form-group m-3">
+                <label for="fechaFin">Fecha Fin</label>
+                <input type="text" class="form-control" id="fechaFin" name="fechaFin" formControlName="fechaFin">
+              </div>
+              <div *ngIf="fechaFin?.errors && fechaFin?.touched">
+                <div *ngIf="fechaFin?.hasError('required')" class="alert alert-danger" role="alert">
+                  Debe ingresar la fecha de finalización en la institucion.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="nombreEduc?.hasError('required') || descripcionEduc?.hasError('required')" data-bs-dismiss="modal" class="btn btn-primary">Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

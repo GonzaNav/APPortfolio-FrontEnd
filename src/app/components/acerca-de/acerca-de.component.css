@@ -1,0 +1,40 @@
+
+
+div {
+  text-align: center;
+}
+
+.row {
+  padding: 30px 0;
+}
+
+/* etiqueta de nombre */
+.miNombre {
+    font-weight: bold;
+    margin-top: 15%;
+}
+#fotoDePerfil {
+  z-index: 999;
+}
+/* foto de perfil */
+@media(min-width: 576px) {
+  #fotoDePerfil {
+    position: absolute;
+    width: 12%;
+    border-radius: 100%;
+    box-shadow: 3px 3px 3px grey;
+    left: 10%;
+    top: 550px;
+  }
+}
+
+@media(max-width: 575px) {
+    #fotoDePerfil {
+      position: absolute;
+      width: 30%;
+      border-radius: 100%;
+      box-shadow: 3px 3px 3px grey;
+      left: 35%;
+      top: 630px;
+    }
+  }
