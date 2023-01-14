@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SImageService } from 'src/app/service/s-image.service';
 import { SProyectoService } from 'src/app/service/s-proyecto.service';
 
 @Component({
@@ -19,11 +20,12 @@ export class ActualizarProyectoComponent implements OnInit {
     }
 
   }
-  constructor(private sProyecto: SProyectoService,private formBuilder: FormBuilder) {
+  constructor(private sProyecto: SProyectoService,private formBuilder: FormBuilder, public imgService: SImageService) {
 
     this.proyectoForm = this.formBuilder.group({
-      nombreProyecto: ['', [Validators.required]],
-      descripcionProyecto: ['', [Validators.required]],
+      imgProy: ['', [Validators.required]],
+      nombreProy: ['', [Validators.required]],
+      descripcionProy: ['', [Validators.required]],
 
     });
 
@@ -33,24 +35,29 @@ export class ActualizarProyectoComponent implements OnInit {
 
   }
 
-  get nombreProyecto() {
-    return this.proyectoForm.get("nombreProyecto");
+  get imgProy() {
+    return this.proyectoForm.get('imgProy');
   }
 
-  get descripcionProyecto() {
-    return this.proyectoForm.get("descripcionProyecto");
+  get nombreProy() {
+    return this.proyectoForm.get("nombreProy");
+  }
+
+  get descripcionProy() {
+    return this.proyectoForm.get("descripcionProy");
   }
 
   setValues() {
     this.sProyecto.detail(this.selectedId).subscribe(data => {
       this.proyectoForm.patchValue({
-        nombreProyecto: data.nombreProy,
-        descripcionProyecto: data.descripcionProy
+        nombreProy: data.nombreProy,
+        descripcionProy: data.descripcionProy
       });
     });
   }
 
   updateProyecto() : void {
+    this.proyectoForm.patchValue({'imgProy' : this.imgService.url });
     this.sProyecto.update(this.selectedId, this.proyectoForm.value).subscribe(data => {
       alert("Proyecto actualizado");
       this.clearForm();
@@ -64,6 +71,13 @@ export class ActualizarProyectoComponent implements OnInit {
     this.proyectoForm.reset({});
   }
 
+  subirImagen($event : any) {
+    if($event.target.files[0]) {
+      const name = 'proyecto_'+this.proyectoForm.get('nombreProy')?.value.toLowerCase();
+      const storagePath = 'proyectos';
+      this.imgService.subirImagen($event, name.replace(/\s/g, ''), storagePath);
+    }
+  }
 
 }
 

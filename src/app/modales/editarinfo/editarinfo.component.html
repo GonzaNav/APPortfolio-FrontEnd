@@ -8,44 +8,54 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="personaForm" (ngSubmit)="updatePersona()" novalidate #form="ngForm">
-          <div class="form-group m-3">
-            <label for="nombrePersona">Nombre</label>
-            <input type="text" class="form-control" id="nombrePersona" name="nombrePersona" formControlName="nombrePersona">
+          <div class="form-group m-2">
+            <label for="img">Foto de Perfil</label>
+            <input type="hidden" class="form-control" id="img" name="img" formControlName="img">
+            <input name="file" class="form-control" type="file" (change)="subirImagen($event)">
           </div>
-          <div *ngIf="nombrePersona?.errors && nombrePersona?.touched">
-            <div *ngIf="nombrePersona?.hasError('required')" class="alert alert-danger" role="alert">
+          <div *ngIf="img?.errors && img?.touched">
+            <div *ngIf="img?.hasError('required')" class="alert alert-danger" role="alert">
+              Debe ingresar una imagen.
+            </div>
+          </div>
+          <div class="form-group m-3">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre">
+          </div>
+          <div *ngIf="nombre?.errors && nombre?.touched">
+            <div *ngIf="nombre?.hasError('required')" class="alert alert-danger" role="alert">
               Debe ingresar su nombre.
             </div>
           </div>
           <div class="form-group m-3">
-            <label for="apellidoPersona">Apellido</label>
-            <input type="text" class="form-control" id="apellidoPersona" name="apellidoPersona" formControlName="apellidoPersona">
+            <label for="apellido">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" formControlName="apellido">
           </div>
-          <div *ngIf="apellidoPersona?.errors && apellidoPersona?.touched">
-            <div *ngIf="apellidoPersona?.hasError('required')" class="alert alert-danger" role="alert">
+          <div *ngIf="apellido?.errors && apellido?.touched">
+            <div *ngIf="apellido?.hasError('required')" class="alert alert-danger" role="alert">
               Debe ingresar su apellido.
             </div>
           </div>
           <div class="form-group m-3">
-            <label for="tituloPersona">Título</label>
-            <input type="text" class="form-control" id="tituloPersona" name="tituloPersona" formControlName="tituloPersona">
+            <label for="titulo">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" formControlName="titulo">
           </div>
-          <div *ngIf="tituloPersona?.errors && tituloPersona?.touched">
-            <div *ngIf="tituloPersona?.hasError('required')" class="alert alert-danger" role="alert">
+          <div *ngIf="titulo?.errors && titulo?.touched">
+            <div *ngIf="titulo?.hasError('required')" class="alert alert-danger" role="alert">
               Debe ingresar su titulo.
             </div>
           </div>
           <div class="form-group m-3">
-            <label for="descripcionPersona">Acerca de mí</label>
-            <textarea rows="5" type="text" class="form-control" id="descripcionPersona" name="descripcionPersona" formControlName="descripcionPersona"></textarea>
+            <label for="descripcion">Acerca de mí</label>
+            <textarea rows="5" type="text" class="form-control" id="descripcion" name="descripcion" formControlName="descripcion"></textarea>
           </div>
-          <div *ngIf="descripcionPersona?.errors && descripcionPersona?.touched">
-            <div *ngIf="descripcionPersona?.hasError('required')" class="alert alert-danger" role="alert">
+          <div *ngIf="descripcion?.errors && descripcion?.touched">
+            <div *ngIf="descripcion?.hasError('required')" class="alert alert-danger" role="alert">
               Debe agregar su descripción.
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" [disabled]="nombrePersona?.hasError('required') || descripcionPersona?.hasError('required')" data-bs-dismiss="modal" class="btn btn-primary">Actualizar</button>
+            <button type="submit" [disabled]="nombre?.hasError('required') || descripcion?.hasError('required')" data-bs-dismiss="modal" class="btn btn-primary">Actualizar</button>
           </div>
         </form>
       </div>

@@ -23,10 +23,11 @@ export class EditarinfoComponent implements OnInit{
   constructor(private sPersona: PersonaService,private formBuilder: FormBuilder, public imgService: SImageService) {
 
     this.personaForm = this.formBuilder.group({
-      nombrePersona: ['', [Validators.required]],
-      apellidoPersona: ['', [Validators.required]],
-      descripcionPersona: ['', [Validators.required]],
-      tituloPersona: ['', [Validators.required]]
+      img: ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+      titulo: ['', [Validators.required]]
 
     });
 
@@ -36,37 +37,43 @@ export class EditarinfoComponent implements OnInit{
 
   }
 
-  get nombrePersona() {
-    return this.personaForm.get("nombrePersona");
+  get img() {
+    return this.personaForm.get("img");
   }
 
-  get apellidoPersona() {
-    return this.personaForm.get("apellidoPersona");
+  get nombre() {
+    return this.personaForm.get("nombre");
   }
 
-  get tituloPersona() {
-    return this.personaForm.get("tituloPersona");
+  get apellido() {
+    return this.personaForm.get("apellido");
   }
 
-  get descripcionPersona() {
-    return this.personaForm.get("descripcionPersona");
+  get titulo() {
+    return this.personaForm.get("titulo");
+  }
+
+  get descripcion() {
+    return this.personaForm.get("descripcion");
   }
 
 
   setValues() {
     this.sPersona.detail(this.selectedId).subscribe(data => {
       this.personaForm.patchValue({
-        nombrePersona: data.nombre,
-        apellidoPersona: data.apellido,
-        descripcionPersona: data.descripcion,
-        tituloPersona: data.titulo,
+        img: data.img,
+        nombre: data.nombre,
+        apellido: data.apellido,
+        descripcion: data.descripcion,
+        titulo: data.titulo,
       });
     });
   }
 
   updatePersona() {
+    this.personaForm.patchValue({'img' : this.imgService.url != '' ? this.imgService.url : this.personaForm.controls['img'].value });
     this.sPersona.update(this.selectedId, this.personaForm.value).subscribe(data => {
-      alert("Personaeriencia actualizada");
+      alert("Persona actualizada");
       this.clearForm();
       window.location.reload();
     }, err => {
@@ -75,13 +82,15 @@ export class EditarinfoComponent implements OnInit{
   }
 
   clearForm() {
-
     this.personaForm.reset({});
   }
 
   subirImagen($event : any) {
-    const id = this.selectedId;
-    const name = 'perfil_'+id;
-    this.imgService.subirImagen($event, name);
+    if($event.target.files[0]) {
+      const id = this.selectedId;
+      const name = 'perfil_'+id;
+      const storagePath = 'acercade';
+      console.log(this.imgService.subirImagen($event, name, storagePath));
+    }
   }
 }

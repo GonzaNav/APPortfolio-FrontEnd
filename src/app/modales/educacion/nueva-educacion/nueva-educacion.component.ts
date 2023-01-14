@@ -60,7 +60,6 @@ export class NuevaEducacionComponent {
   }
 
   clearForm() {
-
     this.educacionForm.reset({});
   }
 

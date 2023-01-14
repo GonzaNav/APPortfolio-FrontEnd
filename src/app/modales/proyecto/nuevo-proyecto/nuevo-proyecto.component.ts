@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SImageService } from 'src/app/service/s-image.service';
 import { SProyectoService } from 'src/app/service/s-proyecto.service';
 
 @Component({
@@ -11,11 +12,12 @@ export class NuevoProyectoComponent implements OnInit {
 
   proyectoForm: FormGroup;
 
-  constructor(private sProyecto: SProyectoService, private formBuilder: FormBuilder) {
+  constructor(private sProyecto: SProyectoService, private formBuilder: FormBuilder, public imgService: SImageService) {
 
     this.proyectoForm = this.formBuilder.group({
-      nombreProyecto: ['', [Validators.required]],
-      descripcionProyecto: ['', [Validators.required]],
+      imgProy: ['', [Validators.required]],
+      nombreProy: ['', [Validators.required]],
+      descripcionProy: ['', [Validators.required]],
 
     });
    }
@@ -23,16 +25,20 @@ export class NuevoProyectoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get nombreProyecto() {
-    return this.proyectoForm.get("nombreProyecto");
+  get imgProy() {
+    return this.proyectoForm.get("imgProy");
   }
 
-  get descripcionProyecto() {
-    return this.proyectoForm.get("descripcionProyecto");
+  get nombreProy() {
+    return this.proyectoForm.get("nombreProy");
   }
 
+  get descripcionProy() {
+    return this.proyectoForm.get("descripcionProy");
+  }
 
   createProyecto():void{
+    this.proyectoForm.patchValue({'imgProy' : this.imgService.url });
     this.sProyecto.save(this.proyectoForm.value).subscribe(data => {
       alert("Proyecto agregado");
       this.clearForm();
@@ -44,6 +50,15 @@ export class NuevoProyectoComponent implements OnInit {
 
   clearForm() {
     this.proyectoForm.reset({});
+  }
+
+  subirImagen($event : any) {
+    if($event.target.files[0]) {
+      const name = 'proyecto_'+this.proyectoForm.get('nombreProy')?.value.toLowerCase();
+      const storagePath = 'proyectos';
+      this.proyectoForm.patchValue({'imgProy' : $event ? $event.target.files[0].name : '' });
+      this.imgService.subirImagen($event, name.replace(/\s/g, ''), storagePath);
+    }
   }
 }
 
