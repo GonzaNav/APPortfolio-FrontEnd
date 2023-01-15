@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { HysService } from 'src/app/service/hys.service';
 
 @Component({
@@ -11,7 +13,7 @@ export class NuevaHysComponent implements OnInit {
 
   hysForm: FormGroup;
 
-  constructor(private sHys: HysService, private formBuilder: FormBuilder) {
+  constructor(private sHys: HysService, private formBuilder: FormBuilder, private router : Router, private toastr: ToastrService) {
 
     this.hysForm = this.formBuilder.group({
       nombreHys: ['', [Validators.required]],
@@ -38,17 +40,22 @@ export class NuevaHysComponent implements OnInit {
 
 
   createHys():void{
-    this.sHys.save(this.hysForm.value).subscribe(data => {
-      alert("Habilidad agregada");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
+    this.sHys.save(this.hysForm.value).subscribe({
+      next: () => {
+        this.router.navigate(['', { outlets: { modal: null }}]);
+        this.sHys.filter("Register click");
+        this.toastr.success('Skill creada', 'Se creó correctamente');
+      },
+      error: () => {
+        this.toastr.error('Se produjo un error', 'Intente nuevamente');
+      }
     });
   }
 
   clearForm() {
-
     this.hysForm.reset({});
+  }
+  modalClose(event : any) {
+    this.router.navigate(['', { outlets: { modal: null }}]);
   }
 }

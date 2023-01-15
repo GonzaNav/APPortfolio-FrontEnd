@@ -1,48 +1,40 @@
-<div class="modal fade" id="modal-actualizar-habilidad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered justify-content-center">
-    <div class="modal-content rounded-4">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Actualizar habilidad</h3>
-        <button type="button" class="btn-close bg-white rounded-circle mb-4" data-bs-dismiss="modal"
-          aria-label="Close"></button>
+<app-modal #modal="modal" page="">
+  <div modal-header>Actualizar habilidad</div>
+  <div modal-body>
+    <form [formGroup]="hysForm" (ngSubmit)="updateHys()" novalidate #form="ngForm">
+      <div class="form-group m-3">
+        <label for="nombreHys">Nombre de la habilidad</label>
+        <input type="text" class="form-control" id="nombreHys" name="nombreHys" formControlName="nombreHys">
       </div>
-      <div class="modal-body">
-        <form [formGroup]="hysForm" (ngSubmit)="updateHys()" novalidate #form="ngForm">
-          <div class="form-group m-3">
-            <label for="nombreHys">Nombre de la habilidad</label>
-            <input type="text" class="form-control" id="nombreHys" name="nombreHys" formControlName="nombreHys">
-          </div>
-          <div *ngIf="nombreHys?.errors && nombreHys?.touched">
-            <div *ngIf="nombreHys?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar el nombre de la habilidad.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="porcentajeHys">Porcentaje de la habilidad</label>
-            <input type="text" class="form-control" id="porcentajeHys" name="porcentajeHys" formControlName="porcentajeHys">
-          </div>
-          <div *ngIf="porcentajeHys?.errors && porcentajeHys?.touched">
-            <div *ngIf="porcentajeHys?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar el porcentaje.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="tipo">Tipo</label>
-            <select class="form-select" id="tipo" name="tipo" formControlName="tipo">
-              <option value="soft">Soft</option>
-              <option value="hard">Hard</option>
-            </select>
-          </div>
-          <div *ngIf="tipo?.errors && tipo?.touched">
-            <div *ngIf="tipo?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe agregar el tipo.
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" [disabled]="nombreHys?.hasError('required') || porcentajeHys?.hasError('required')" data-bs-dismiss="modal" class="btn btn-warning">Actualizar</button>
-          </div>
-        </form>
+      <div *ngIf="nombreHys?.errors && nombreHys?.touched">
+        <div *ngIf="nombreHys?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar el nombre de la habilidad.
+        </div>
       </div>
-    </div>
+      <div class="form-group m-3">
+        <label for="porcentajeHys">Porcentaje de la habilidad</label>
+        <input type="text" class="form-control" id="porcentajeHys" name="porcentajeHys" formControlName="porcentajeHys">
+      </div>
+      <div *ngIf="porcentajeHys?.errors && porcentajeHys?.touched">
+        <div *ngIf="porcentajeHys?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar el porcentaje.
+        </div>
+      </div>
+      <div class="form-group m-3">
+        <label for="tipo">Tipo</label>
+        <select class="form-select" id="tipo" name="tipo" formControlName="tipo">
+          <option value="soft">Soft</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div *ngIf="tipo?.errors && tipo?.touched">
+        <div *ngIf="tipo?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe agregar el tipo.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" [disabled]="nombreHys?.hasError('required') || porcentajeHys?.hasError('required')" data-bs-dismiss="modal" class="btn btn-warning">Actualizar</button>
+      </div>
+    </form>
   </div>
-</div>
+</app-modal>

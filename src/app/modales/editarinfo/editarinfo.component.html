@@ -1,64 +1,64 @@
-<div class="modal fade" id="modal-actualizar-info" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered justify-content-center">
-    <div class="modal-content rounded-4">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Actualizar datos personales</h3>
-        <button type="button" class="btn-close bg-white rounded-circle mb-4" data-bs-dismiss="modal"
-          aria-label="Close"></button>
+<app-modal #modal="modal" page="">
+  <div modal-header>Actualizar datos personales</div>
+  <div modal-body>
+    <form [formGroup]="personaForm" (ngSubmit)="updatePersona()" novalidate #form="ngForm">
+      <div class="form-group m-2">
+        <label for="img">Foto de Perfil</label>
+        <input type="hidden" class="form-control" id="img" name="img" formControlName="img">
+        <input name="file" class="form-control" type="file" (change)="subirImagen($event)">
       </div>
-      <div class="modal-body">
-        <form [formGroup]="personaForm" (ngSubmit)="updatePersona()" novalidate #form="ngForm">
-          <div class="form-group m-2">
-            <label for="img">Foto de Perfil</label>
-            <input type="hidden" class="form-control" id="img" name="img" formControlName="img">
-            <input name="file" class="form-control" type="file" (change)="subirImagen($event)">
-          </div>
-          <div *ngIf="img?.errors && img?.touched">
-            <div *ngIf="img?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar una imagen.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre">
-          </div>
-          <div *ngIf="nombre?.errors && nombre?.touched">
-            <div *ngIf="nombre?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar su nombre.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="apellido">Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" formControlName="apellido">
-          </div>
-          <div *ngIf="apellido?.errors && apellido?.touched">
-            <div *ngIf="apellido?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar su apellido.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="titulo">Título</label>
-            <input type="text" class="form-control" id="titulo" name="titulo" formControlName="titulo">
-          </div>
-          <div *ngIf="titulo?.errors && titulo?.touched">
-            <div *ngIf="titulo?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar su titulo.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="descripcion">Acerca de mí</label>
-            <textarea rows="5" type="text" class="form-control" id="descripcion" name="descripcion" formControlName="descripcion"></textarea>
-          </div>
-          <div *ngIf="descripcion?.errors && descripcion?.touched">
-            <div *ngIf="descripcion?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe agregar su descripción.
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" [disabled]="nombre?.hasError('required') || descripcion?.hasError('required')" data-bs-dismiss="modal" class="btn btn-warning">Actualizar</button>
-          </div>
-        </form>
+      <div *ngIf="img?.errors && img?.touched">
+        <div *ngIf="img?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar una imagen.
+        </div>
       </div>
-    </div>
+      <div class="form-group m-3">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre">
+      </div>
+      <div *ngIf="nombre?.errors && nombre?.touched">
+        <div *ngIf="nombre?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar su nombre.
+        </div>
+      </div>
+      <div class="form-group m-3">
+        <label for="apellido">Apellido</label>
+        <input type="text" class="form-control" id="apellido" name="apellido" formControlName="apellido">
+      </div>
+      <div *ngIf="apellido?.errors && apellido?.touched">
+        <div *ngIf="apellido?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar su apellido.
+        </div>
+      </div>
+      <div class="form-group m-3">
+        <label for="titulo">Título</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" formControlName="titulo">
+      </div>
+      <div *ngIf="titulo?.errors && titulo?.touched">
+        <div *ngIf="titulo?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar su titulo.
+        </div>
+      </div>
+      <div class="form-group m-3">
+        <label for="descripcion">Acerca de mí</label>
+        <textarea rows="5" type="text" class="form-control" id="descripcion" name="descripcion" formControlName="descripcion"></textarea>
+      </div>
+      <div *ngIf="descripcion?.errors && descripcion?.touched">
+        <div *ngIf="descripcion?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe agregar su descripción.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" [disabled]="nombre?.hasError('required') || descripcion?.hasError('required')" data-bs-dismiss="modal" class="btn btn-warning">Actualizar</button>
+      </div>
+    </form>
   </div>
-</div>
+
+
+</app-modal>
+
+
+
+
+
+

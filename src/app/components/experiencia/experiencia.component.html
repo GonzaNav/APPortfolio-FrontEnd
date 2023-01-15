@@ -11,9 +11,7 @@
             </div>
             <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
               <div class="btn-group me-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-success rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-nueva-experiencia">
-                  <i class="bi bi-plus-lg"></i>
-                </button>
+                <a type="button" class="btn btn-success rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['experiencia','nueva'] } }]"><i class="bi bi-plus-lg"></i></a>
               </div>
             </div>
           </div>
@@ -32,9 +30,7 @@
                             <span class="time">{{experiencia.fechaInicio}} - {{experiencia.fechaFin}}</span>
                             <div class="btn-toolbar" role="toolbar" *ngIf="isLogged">
                               <div class="btn-group me-2 btn-group-sm" role="group" aria-label="First group">
-                                <button (click)="obtenerUnaExperiencia(experiencia.id!)" type="button" class="btn btn-warning rounded-circle">
-                                  <i class="bi bi-pencil-fill"></i>
-                                </button>
+                                <a type="button" class="btn btn-warning rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['experiencia','actualizar', experiencia.id] } }]"><i class="bi bi-pencil-fill"></i></a>
                               </div>
                               <div class="btn-group btn-group-sm" role="group" aria-label="Second group">
                                 <button (click)="borrar(experiencia.id!)" type="button" class="btn btn-danger rounded-circle">
@@ -52,5 +48,3 @@
       </div>
   </div>
 </section>
-<app-nueva-experiencia></app-nueva-experiencia>
-<app-actualizar-experiencia [idSeleccionado]="idSeleccionado"></app-actualizar-experiencia>

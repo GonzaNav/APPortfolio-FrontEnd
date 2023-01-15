@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SEducacionService } from 'src/app/service/s-educacion.service';
 
 @Component({
@@ -10,16 +12,7 @@ import { SEducacionService } from 'src/app/service/s-educacion.service';
 export class ActualizarEducacionComponent implements OnInit {
 
   educacionForm: FormGroup;
-  @Input('idSeleccionado') selectedId : any = null;
-  ngOnChanges(changes: SimpleChanges) {
-
-    if(this.selectedId) {
-
-      this.setValues();
-    }
-
-  }
-  constructor(private sEducacion: SEducacionService,private formBuilder: FormBuilder) {
+  constructor(private sEducacion: SEducacionService,private formBuilder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute, private toastr: ToastrService) {
 
     this.educacionForm = this.formBuilder.group({
       nombreEduc: ['', [Validators.required]],
@@ -33,6 +26,16 @@ export class ActualizarEducacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.sEducacion.detail(id).subscribe(data => {
+      this.educacionForm.patchValue({
+        nombreEduc: data.nombreEduc,
+        institucionEduc: data.institucionEduc,
+        descripcionEduc: data.descripcionEduc,
+        fechaInicio: data.fechaInicio,
+        fechaFin: data.fechaFin,
+      });
+    });
 
   }
 
@@ -56,30 +59,22 @@ export class ActualizarEducacionComponent implements OnInit {
     return this.educacionForm.get("fechaFin");
   }
 
-  setValues() {
-    this.sEducacion.detail(this.selectedId).subscribe(data => {
-      this.educacionForm.patchValue({
-        nombreEduc: data.nombreEduc,
-        institucionEduc: data.institucionEduc,
-        descripcionEduc: data.descripcionEduc,
-        fechaInicio: data.fechaInicio,
-        fechaFin: data.fechaFin,
-      });
-    });
-  }
-
   updateEduc() {
-    this.sEducacion.update(this.selectedId, this.educacionForm.value).subscribe(data => {
-      alert("Educacion actualizada");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.sEducacion.update(id, this.educacionForm.value).subscribe({
+      next: () => {
+        this.clearForm();
+        this.router.navigate(['', { outlets: { modal: null }}]);
+        this.sEducacion.filter("Update click");
+        this.toastr.success('Educación actualizada', 'Se actualizó correctamente');
+      },
+      error: () => {
+        this.toastr.error('Se produjo un error', 'Intente nuevamente');
+      }
     });
   }
 
   clearForm() {
-
     this.educacionForm.reset({});
   }
 }

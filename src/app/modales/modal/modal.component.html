@@ -1,0 +1,22 @@
+<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modal">
+
+  <div class="modal-dialog modal-dialog-centered justify-content-center">
+
+    <div class="modal-content rounded-4">
+
+      <div class="modal-header">
+
+        <h3 class="modal-title" id="exampleModalLabel">
+          <ng-content select="[modal-header]"></ng-content>
+        </h3>
+
+        <button type="button" class="btn-close bg-white rounded-circle mb-4" data-bs-dismiss="modal"
+          aria-label="Close" (click)="closeModal($event)"></button>
+
+      </div>
+      <div class="modal-body">
+        <ng-content select="[modal-body]"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

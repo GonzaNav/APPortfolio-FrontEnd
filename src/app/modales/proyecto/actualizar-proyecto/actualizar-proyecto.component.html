@@ -1,46 +1,38 @@
-<div class="modal fade" id="modal-actualizar-proyecto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered justify-content-center">
-    <div class="modal-content rounded-4">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Actualizar proyecto</h3>
-        <button type="button" class="btn-close bg-white rounded-circle mb-4" data-bs-dismiss="modal"
-          aria-label="Close"></button>
+<app-modal #modal="modal" page="">
+  <div modal-header>Actualizar proyecto</div>
+  <div modal-body>
+    <form [formGroup]="proyectoForm" (ngSubmit)="updateProyecto()" novalidate #form="ngForm">
+      <div class="form-group m-3">
+        <label for="nombreProy">Nombre del proyecto</label>
+        <input type="text" class="form-control" id="nombreProy" name="nombreProy" formControlName="nombreProy">
       </div>
-      <div class="modal-body">
-        <form [formGroup]="proyectoForm" (ngSubmit)="updateProyecto()" novalidate #form="ngForm">
-          <div class="form-group m-3">
-            <label for="nombreProy">Nombre del proyecto</label>
-            <input type="text" class="form-control" id="nombreProy" name="nombreProy" formControlName="nombreProy">
-          </div>
-          <div *ngIf="nombreProy?.errors && nombreProy?.touched">
-            <div *ngIf="nombreProy?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar el nombre del proyecto.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="descripcionProy">Descripción del proyecto</label>
-            <input type="text" class="form-control" id="descripcionProy" name="descripcionProy" formControlName="descripcionProy">
-          </div>
-          <div *ngIf="descripcionProy?.errors && descripcionProy?.touched">
-            <div *ngIf="descripcionProy?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar una descripción.
-            </div>
-          </div>
-          <div class="form-group m-2">
-            <label for="img">Foto del Proyecto</label>
-            <input type="hidden" class="form-control" id="img" name="img" formControlName="imgProy">
-            <input [disabled]="nombreProy?.hasError('required')" name="file" class="form-control" type="file" (change)="subirImagen($event)">
-          </div>
-          <div *ngIf="imgProy?.errors && imgProy?.touched">
-            <div *ngIf="imgProy?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar una imagen.
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" [disabled]="nombreProy?.hasError('required') || descripcionProy?.hasError('required')" data-bs-dismiss="modal" class="btn btn-warning">Actualizar</button>
-          </div>
-        </form>
+      <div *ngIf="nombreProy?.errors && nombreProy?.touched">
+        <div *ngIf="nombreProy?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar el nombre del proyecto.
+        </div>
       </div>
-    </div>
+      <div class="form-group m-3">
+        <label for="descripcionProy">Descripción del proyecto</label>
+        <input type="text" class="form-control" id="descripcionProy" name="descripcionProy" formControlName="descripcionProy">
+      </div>
+      <div *ngIf="descripcionProy?.errors && descripcionProy?.touched">
+        <div *ngIf="descripcionProy?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar una descripción.
+        </div>
+      </div>
+      <div class="form-group m-2">
+        <label for="img">Foto del Proyecto</label>
+        <input type="hidden" class="form-control" id="img" name="img" formControlName="imgProy">
+        <input [disabled]="nombreProy?.hasError('required')" name="file" class="form-control" type="file" (change)="subirImagen($event)">
+      </div>
+      <div *ngIf="imgProy?.errors && imgProy?.touched">
+        <div *ngIf="imgProy?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar una imagen.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" [disabled]="nombreProy?.hasError('required') || descripcionProy?.hasError('required')" data-bs-dismiss="modal" class="btn btn-warning">Actualizar</button>
+      </div>
+    </form>
   </div>
-</div>
+</app-modal>

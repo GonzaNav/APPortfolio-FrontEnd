@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SImageService } from 'src/app/service/s-image.service';
 import { SProyectoService } from 'src/app/service/s-proyecto.service';
 
@@ -12,7 +14,7 @@ export class NuevoProyectoComponent implements OnInit {
 
   proyectoForm: FormGroup;
 
-  constructor(private sProyecto: SProyectoService, private formBuilder: FormBuilder, public imgService: SImageService) {
+  constructor(private sProyecto: SProyectoService, private formBuilder: FormBuilder, public imgService: SImageService, private router : Router, private toastr: ToastrService) {
 
     this.proyectoForm = this.formBuilder.group({
       imgProy: ['', [Validators.required]],
@@ -39,12 +41,15 @@ export class NuevoProyectoComponent implements OnInit {
 
   createProyecto():void{
     this.proyectoForm.patchValue({'imgProy' : this.imgService.url });
-    this.sProyecto.save(this.proyectoForm.value).subscribe(data => {
-      alert("Proyecto agregado");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
+    this.sProyecto.save(this.proyectoForm.value).subscribe({
+      next: () => {
+        this.router.navigate(['', { outlets: { modal: null }}]);
+        this.sProyecto.filter("Register click");
+        this.toastr.success('Proyecto creado', 'Se creó correctamente');
+      },
+      error: () => {
+        this.toastr.error('Se produjo un error', 'Intente nuevamente');
+      }
     });
   }
 
@@ -59,6 +64,10 @@ export class NuevoProyectoComponent implements OnInit {
       this.proyectoForm.patchValue({'imgProy' : $event ? $event.target.files[0].name : '' });
       this.imgService.subirImagen($event, name.replace(/\s/g, ''), storagePath);
     }
+  }
+
+  modalClose(event : any) {
+    this.router.navigate(['', { outlets: { modal: null }}]);
   }
 }
 

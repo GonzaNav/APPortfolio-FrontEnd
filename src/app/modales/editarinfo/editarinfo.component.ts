@@ -1,5 +1,7 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { PersonaService } from 'src/app/service/persona.service';
 import { SImageService } from 'src/app/service/s-image.service';
 
@@ -9,18 +11,9 @@ import { SImageService } from 'src/app/service/s-image.service';
   styleUrls: ['./editarinfo.component.css']
 })
 export class EditarinfoComponent implements OnInit{
-
   personaForm: FormGroup;
-  @Input('idSeleccionado') selectedId : any = null;
-  ngOnChanges(changes: SimpleChanges) {
 
-    if(this.selectedId) {
-
-      this.setValues();
-    }
-
-  }
-  constructor(private sPersona: PersonaService,private formBuilder: FormBuilder, public imgService: SImageService) {
+  constructor(private sPersona: PersonaService,private formBuilder: FormBuilder, public imgService: SImageService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService) {
 
     this.personaForm = this.formBuilder.group({
       img: ['', [Validators.required]],
@@ -34,6 +27,16 @@ export class EditarinfoComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.sPersona.detail(id).subscribe(data => {
+      this.personaForm.patchValue({
+        img: data.img,
+        nombre: data.nombre,
+        apellido: data.apellido,
+        descripcion: data.descripcion,
+        titulo: data.titulo,
+      });
+    });
 
   }
 
@@ -57,28 +60,22 @@ export class EditarinfoComponent implements OnInit{
     return this.personaForm.get("descripcion");
   }
 
-
-  setValues() {
-    this.sPersona.detail(this.selectedId).subscribe(data => {
-      this.personaForm.patchValue({
-        img: data.img,
-        nombre: data.nombre,
-        apellido: data.apellido,
-        descripcion: data.descripcion,
-        titulo: data.titulo,
-      });
-    });
-  }
-
   updatePersona() {
+    const id = this.activatedRoute.snapshot.params['id'];
     this.personaForm.patchValue({'img' : this.imgService.url != '' ? this.imgService.url : this.personaForm.controls['img'].value });
-    this.sPersona.update(this.selectedId, this.personaForm.value).subscribe(data => {
-      alert("Persona actualizada");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
-    });
+    this.sPersona.update(id, this.personaForm.value).subscribe(
+      {
+        next: () => {
+          this.clearForm();
+          this.router.navigate(['', { outlets: { modal: null }}]);
+          this.sPersona.filter("Update click");
+          this.toastr.success('Datos actualizados', 'Se actualizó correctamente');
+        },
+        error: () => {
+          this.toastr.error('Se produjo un error', 'Intente nuevamente');
+        }
+      }
+    );
   }
 
   clearForm() {
@@ -86,8 +83,9 @@ export class EditarinfoComponent implements OnInit{
   }
 
   subirImagen($event : any) {
+
     if($event.target.files[0]) {
-      const id = this.selectedId;
+      const id = this.activatedRoute.snapshot.params['id'];
       const name = 'perfil_'+id;
       const storagePath = 'acercade';
       console.log(this.imgService.subirImagen($event, name, storagePath));

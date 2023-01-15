@@ -13,15 +13,18 @@ export class ExperienciaComponent implements OnInit {
 
   formModal: any;
   experiencias : Experiencia[] = [];
-  constructor(private sExperiencia : SExperienciaService, private tokenService : TokenService) {}
+  constructor(private sExperiencia : SExperienciaService, private tokenService : TokenService) {
+    this.sExperiencia.listen().subscribe({
+      next: () => {
+        this.cargarExperiencias();
+      }
+    });
+  }
 
   isLogged = false;
   idSeleccionado : any = null;
   ngOnInit() : void {
     this.cargarExperiencias();
-    /* this.formModal = new window.bootstrap.Modal(
-      document.getElementById('modal-actualizar-experiencia')
-    ); */
     if(this.tokenService.getToken()) {
       this.isLogged = true;
     } else {
@@ -33,11 +36,6 @@ export class ExperienciaComponent implements OnInit {
     this.sExperiencia.lista().subscribe(
       data => this.experiencias = data
     )
-  }
-
-  obtenerUnaExperiencia(id: number) : void {
-    this.idSeleccionado = id;
-    this.formModal.show();
   }
 
   borrar(id: number) {

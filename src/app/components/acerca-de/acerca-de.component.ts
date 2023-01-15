@@ -14,15 +14,17 @@ export class AcercaDeComponent implements OnInit {
   formModal: any;
   persona: Persona = new Persona('', '', '', '', '');
 
-  constructor(public personaService: PersonaService, private tokenService : TokenService) {}
+  constructor(public personaService: PersonaService, private tokenService : TokenService) {
+    this.personaService.listen().subscribe({
+      next: () => {
+        this.cargarPersona();
+      }
+    });
+  }
   isLogged = false;
-  idSeleccionado : any = null;
 
   ngOnInit(): void {
     this.cargarPersona();
-    this.formModal = new window.bootstrap.Modal(
-      document.getElementById('modal-actualizar-info')
-    );
     if(this.tokenService.getToken()) {
       this.isLogged = true;
     } else {
@@ -34,11 +36,6 @@ export class AcercaDeComponent implements OnInit {
     this.personaService.detail(1).subscribe(data => {
       this.persona = data;
     });
-  }
-
-  abrirModal(id: number) : void {
-    this.idSeleccionado = id;
-    this.formModal.show();
   }
 
 }
