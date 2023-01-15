@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SExperienciaService } from 'src/app/service/s-experiencia.service';
 
 @Component({
@@ -11,7 +13,7 @@ export class NuevaExperienciaComponent implements OnInit {
 
   experienciaForm: FormGroup;
 
-  constructor(private sExperienciaService: SExperienciaService, private formBuilder: FormBuilder) {
+  constructor(private sExperienciaService: SExperienciaService, private formBuilder: FormBuilder, private router : Router, private toastr: ToastrService) {
 
     this.experienciaForm = this.formBuilder.group({
       nombreExp: ['', [Validators.required]],
@@ -48,18 +50,23 @@ export class NuevaExperienciaComponent implements OnInit {
 
 
   createExp():void{
-
-    this.sExperienciaService.save(this.experienciaForm.value).subscribe(data => {
-      alert("Experiencia agregada");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
+    this.sExperienciaService.save(this.experienciaForm.value).subscribe({
+      next: () => {
+        this.router.navigate(['', { outlets: { modal: null }}]);
+        this.sExperienciaService.filter("Register click");
+        this.toastr.success('Experiencia creada', 'Se creó correctamente');
+      },
+      error: () => {
+        this.toastr.error('Se produjo un error', 'Intente nuevamente');
+      }
     });
   }
 
   clearForm() {
-
     this.experienciaForm.reset({});
+  }
+
+  modalClose(event : any) {
+    this.router.navigate(['', { outlets: { modal: null }}]);
   }
 }

@@ -13,15 +13,18 @@ export class ProyectoComponent implements OnInit {
 
   formModal: any;
   proyectos : Proyecto[] = [];
-  constructor(private sProyecto : SProyectoService, private tokenService : TokenService) {}
+  constructor(private sProyecto : SProyectoService, private tokenService : TokenService) {
+    this.sProyecto.listen().subscribe({
+      next: () => {
+        this.cargarProyectos();
+      }
+    });
+  }
 
   isLogged = false;
   idSeleccionado : any = null;
   ngOnInit() : void {
     this.cargarProyectos();
-    /* this.formModal = new window.bootstrap.Modal(
-      document.getElementById('modal-actualizar-proyecto')
-    ); */
     if(this.tokenService.getToken()) {
       this.isLogged = true;
     } else {

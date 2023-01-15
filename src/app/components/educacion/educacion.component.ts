@@ -12,14 +12,17 @@ declare var window: any;
 export class EducacionComponent implements OnInit {
   educaciones: Educacion[] = [];
   formModal: any;
-  constructor(private sEducacion : SEducacionService, private tokenService : TokenService) {}
+  constructor(private sEducacion : SEducacionService, private tokenService : TokenService) {
+    this.sEducacion.listen().subscribe({
+      next: () => {
+        this.cargarEducacion();
+      }
+    });
+  }
   isLogged = false;
   idSeleccionado : any = null;
   ngOnInit(): void {
     this.cargarEducacion();
-    /* this.formModal = new window.bootstrap.Modal(
-      document.getElementById('modal-actualizar-educacion')
-    ); */
     if(this.tokenService.getToken()) {
       this.isLogged = true;
     } else {

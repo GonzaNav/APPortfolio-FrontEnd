@@ -9,9 +9,7 @@
       </div>
       <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
         <div class="btn-group me-2" role="group" aria-label="First group">
-          <button type="button" class="btn btn-success rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-nueva-educacion">
-            <i class="bi bi-plus-lg"></i>
-          </button>
+          <a type="button" class="btn btn-success rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['educacion','nueva'] } }]"><i class="bi bi-plus-lg"></i></a>
         </div>
       </div>
     </div>
@@ -30,9 +28,7 @@
               <h4 class="mb-0 me-2">{{educacion.nombreEduc}}</h4>
               <div class="btn-toolbar" role="toolbar" *ngIf="isLogged">
                 <div class="btn-group me-2 btn-group-sm" role="group" aria-label="First group">
-                  <button (click)="obtenerUnaEducacion(educacion.id!)" type="button" class="btn btn-warning rounded-circle">
-                    <i class="bi bi-pencil-fill"></i>
-                  </button>
+                  <a type="button" class="btn btn-warning rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['educacion','actualizar', educacion.id] } }]"><i class="bi bi-pencil-fill"></i></a>
                 </div>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Second group">
                   <button (click)="borrar(educacion.id!)" type="button" class="btn btn-danger rounded-circle">
@@ -51,5 +47,3 @@
     <!-- End Container Text -->
   </div>
 </section>
-<app-nueva-educacion></app-nueva-educacion>
-<app-actualizar-educacion [idSeleccionado]="idSeleccionado"></app-actualizar-educacion>

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Experiencia } from 'src/app/model/experiencia';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SExperienciaService } from 'src/app/service/s-experiencia.service';
 
 @Component({
@@ -11,16 +12,7 @@ import { SExperienciaService } from 'src/app/service/s-experiencia.service';
 export class ActualizarExperienciaComponent implements OnInit {
 
   experienciaForm: FormGroup;
-  @Input('idSeleccionado') selectedId : any = null;
-  ngOnChanges(changes: SimpleChanges) {
-
-    if(this.selectedId) {
-
-      this.setValues();
-    }
-
-  }
-  constructor(private sExperiencia: SExperienciaService,private formBuilder: FormBuilder) {
+  constructor(private sExperiencia: SExperienciaService,private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService) {
 
     this.experienciaForm = this.formBuilder.group({
       nombreExp: ['', [Validators.required]],
@@ -34,6 +26,16 @@ export class ActualizarExperienciaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.sExperiencia.detail(id).subscribe(data => {
+      this.experienciaForm.patchValue({
+        nombreExp: data.nombreExp,
+        puestoExp: data.puestoExp,
+        descripcionExp: data.descripcionExp,
+        fechaInicio: data.fechaInicio,
+        fechaFin: data.fechaFin,
+      });
+    });
 
   }
 
@@ -57,32 +59,23 @@ export class ActualizarExperienciaComponent implements OnInit {
     return this.experienciaForm.get("fechaFin");
   }
 
-  setValues() {
-    this.sExperiencia.detail(this.selectedId).subscribe(data => {
-      this.experienciaForm.patchValue({
-        nombreExp: data.nombreExp,
-        puestoExp: data.puestoExp,
-        descripcionExp: data.descripcionExp,
-        fechaInicio: data.fechaInicio,
-        fechaFin: data.fechaFin,
-      });
-    });
-  }
-
   updateExp() {
-    this.sExperiencia.update(this.selectedId, this.experienciaForm.value).subscribe(data => {
-      alert("Experiencia actualizada");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.sExperiencia.update(id, this.experienciaForm.value).subscribe({
+      next: () => {
+        this.clearForm();
+        this.router.navigate(['', { outlets: { modal: null }}]);
+        this.sExperiencia.filter("Update click");
+        this.toastr.success('Experiencia actualizada', 'Se actualizó correctamente');
+      },
+      error: () => {
+        this.toastr.error('Se produjo un error', 'Intente nuevamente');
+      }
     });
   }
 
   clearForm() {
-
     this.experienciaForm.reset({});
   }
-
 
 }

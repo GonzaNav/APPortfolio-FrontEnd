@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { HysService } from 'src/app/service/hys.service';
 
 @Component({
@@ -10,16 +12,7 @@ import { HysService } from 'src/app/service/hys.service';
 export class ActualizarHysComponent implements OnInit {
 
   hysForm: FormGroup;
-  @Input('idSeleccionado') selectedId : any = null;
-  ngOnChanges(changes: SimpleChanges) {
-
-    if(this.selectedId) {
-
-      this.setValues();
-    }
-
-  }
-  constructor(private sHys: HysService,private formBuilder: FormBuilder) {
+  constructor(private sHys: HysService,private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService) {
 
     this.hysForm = this.formBuilder.group({
       nombreHys: ['', [Validators.required]],
@@ -31,6 +24,14 @@ export class ActualizarHysComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.sHys.detail(id).subscribe(data => {
+      this.hysForm.patchValue({
+        nombreHys: data.nombreHys,
+        porcentajeHys: data.porcentajeHys,
+        tipo: data.tipo
+      });
+    });
 
   }
 
@@ -46,28 +47,22 @@ export class ActualizarHysComponent implements OnInit {
     return this.hysForm.get("tipo");
   }
 
-  setValues() {
-    this.sHys.detail(this.selectedId).subscribe(data => {
-      this.hysForm.patchValue({
-        nombreHys: data.nombreHys,
-        porcentajeHys: data.porcentajeHys,
-        tipo: data.tipo
-      });
-    });
-  }
-
   updateHys() {
-    this.sHys.update(this.selectedId, this.hysForm.value).subscribe(data => {
-      alert("Experiencia actualizada");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.sHys.update(id, this.hysForm.value).subscribe({
+      next: () => {
+        this.clearForm();
+        this.router.navigate(['', { outlets: { modal: null }}]);
+        this.sHys.filter("Update click");
+        this.toastr.success('Skill actualizada', 'Se actualizó correctamente');
+      },
+      error: () => {
+        this.toastr.error('Se produjo un error', 'Intente nuevamente');
+      }
     });
   }
 
   clearForm() {
-
     this.hysForm.reset({});
   }
 

@@ -1,69 +1,61 @@
-<div class="modal fade" id="modal-nueva-educacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered justify-content-center">
-    <div class="modal-content rounded-4">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Agregar educación</h3>
-        <button type="button" class="btn-close bg-white rounded-circle mb-4" data-bs-dismiss="modal"
-          aria-label="Close"></button>
+<app-modal (modalClose)="modalClose($event)" #modal="modal" page="">
+  <div modal-header>Agregar educación</div>
+  <div modal-body>
+    <form [formGroup]="educacionForm" (ngSubmit)="crearExp()" novalidate #form="ngForm">
+      <div class="form-group m-3">
+        <label for="nombreEduc">Nombre del Título</label>
+        <input type="text" class="form-control" id="nombreEduc" name="nombreEduc" formControlName="nombreEduc">
       </div>
-      <div class="modal-body">
-        <form [formGroup]="educacionForm" (ngSubmit)="crearExp()" novalidate #form="ngForm">
-          <div class="form-group m-3">
-            <label for="nombreEduc">Nombre del Título</label>
-            <input type="text" class="form-control" id="nombreEduc" name="nombreEduc" formControlName="nombreEduc">
-          </div>
-          <div *ngIf="nombreEduc?.errors && nombreEduc?.touched">
-            <div *ngIf="nombreEduc?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar el nombre del título.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="institucionEduc">Nombre del Establecimiento Educativo</label>
-            <input type="text" class="form-control" id="institucionEduc" name="institucionEduc" formControlName="institucionEduc">
-          </div>
-          <div *ngIf="institucionEduc?.errors && institucionEduc?.touched">
-            <div *ngIf="institucionEduc?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe ingresar el nombre del establecimiento educativo.
-            </div>
-          </div>
-          <div class="form-group m-3">
-            <label for="descripcionEduc">Descripción del título</label>
-            <textarea rows="5" type="text" class="form-control" id="descripcionEduc" name="descripcionEduc" formControlName="descripcionEduc"></textarea>
-          </div>
-          <div *ngIf="descripcionEduc?.errors && descripcionEduc?.touched">
-            <div *ngIf="descripcionEduc?.hasError('required')" class="alert alert-danger" role="alert">
-              Debe agregar la descripción del puesto.
-            </div>
-          </div>
-          <div class="d-flex">
-            <div>
-              <div class="form-group m-3">
-                <label for="fechaInicio">Fecha Inicio</label>
-                <input type="text" class="form-control" id="fechaInicio" name="fechaInicio" formControlName="fechaInicio">
-              </div>
-              <div *ngIf="fechaInicio?.errors && fechaInicio?.touched">
-                <div *ngIf="fechaInicio?.hasError('required')" class="alert alert-danger" role="alert">
-                  Debe ingresar la fecha de comienzo en la institución.
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="form-group m-3">
-                <label for="fechaFin">Fecha Fin</label>
-                <input type="text" class="form-control" id="fechaFin" name="fechaFin" formControlName="fechaFin">
-              </div>
-              <div *ngIf="fechaFin?.errors && fechaFin?.touched">
-                <div *ngIf="fechaFin?.hasError('required')" class="alert alert-danger" role="alert">
-                  Debe ingresar la fecha de finalización en la institución.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" [disabled]="nombreEduc?.hasError('required') || descripcionEduc?.hasError('required')" data-bs-dismiss="modal" class="btn btn-success">Aceptar</button>
-          </div>
-        </form>
+      <div *ngIf="nombreEduc?.errors && nombreEduc?.touched">
+        <div *ngIf="nombreEduc?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar el nombre del título.
+        </div>
       </div>
-    </div>
+      <div class="form-group m-3">
+        <label for="institucionEduc">Nombre del Establecimiento Educativo</label>
+        <input type="text" class="form-control" id="institucionEduc" name="institucionEduc" formControlName="institucionEduc">
+      </div>
+      <div *ngIf="institucionEduc?.errors && institucionEduc?.touched">
+        <div *ngIf="institucionEduc?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe ingresar el nombre del establecimiento educativo.
+        </div>
+      </div>
+      <div class="form-group m-3">
+        <label for="descripcionEduc">Descripción del título</label>
+        <textarea rows="5" type="text" class="form-control" id="descripcionEduc" name="descripcionEduc" formControlName="descripcionEduc"></textarea>
+      </div>
+      <div *ngIf="descripcionEduc?.errors && descripcionEduc?.touched">
+        <div *ngIf="descripcionEduc?.hasError('required')" class="alert alert-danger" role="alert">
+          Debe agregar la descripción del puesto.
+        </div>
+      </div>
+      <div class="d-flex">
+        <div>
+          <div class="form-group m-3">
+            <label for="fechaInicio">Fecha Inicio</label>
+            <input type="text" class="form-control" id="fechaInicio" name="fechaInicio" formControlName="fechaInicio">
+          </div>
+          <div *ngIf="fechaInicio?.errors && fechaInicio?.touched">
+            <div *ngIf="fechaInicio?.hasError('required')" class="alert alert-danger" role="alert">
+              Debe ingresar la fecha de comienzo en la institución.
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="form-group m-3">
+            <label for="fechaFin">Fecha Fin</label>
+            <input type="text" class="form-control" id="fechaFin" name="fechaFin" formControlName="fechaFin">
+          </div>
+          <div *ngIf="fechaFin?.errors && fechaFin?.touched">
+            <div *ngIf="fechaFin?.hasError('required')" class="alert alert-danger" role="alert">
+              Debe ingresar la fecha de finalización en la institución.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" [disabled]="nombreEduc?.hasError('required') || descripcionEduc?.hasError('required')" data-bs-dismiss="modal" class="btn btn-success">Aceptar</button>
+      </div>
+    </form>
   </div>
-</div>
+</app-modal>

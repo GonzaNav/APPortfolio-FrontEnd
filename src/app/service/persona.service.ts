@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Persona } from '../model/persona.model';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -23,4 +22,11 @@ export class PersonaService {
     return this.httpClient.put<any>(this.URL+`update/${id}`, persona)
   }
 
+  private _listners = new Subject<any>();
+  listen(): Observable<any> {
+    return this._listners.asObservable();
+  }
+  filter(filterBy: string) {
+    this._listners.next(filterBy);
+  }
 }

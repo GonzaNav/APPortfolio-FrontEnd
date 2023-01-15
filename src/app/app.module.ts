@@ -34,6 +34,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ToastrModule } from 'ngx-toastr';
+import { ModalComponent } from './modales/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ToastrModule } from 'ngx-toastr';
     NuevaHysComponent,
     ActualizarHysComponent,
     NuevoProyectoComponent,
-    ActualizarProyectoComponent
+    ActualizarProyectoComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({ positionClass: 'toast-top-center' }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideStorage(() => getStorage())
   ],

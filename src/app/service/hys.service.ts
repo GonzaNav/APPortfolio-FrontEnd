@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Hys } from '../model/hys';
 
@@ -37,5 +37,13 @@ export class HysService {
 
   public delete(id: number) : Observable<any> {
     return this.httpClient.delete<any>(this.URL+`delete/${id}`);
+  }
+
+  private _listners = new Subject<any>();
+  listen(): Observable<any> {
+    return this._listners.asObservable();
+  }
+  filter(filterBy: string) {
+    this._listners.next(filterBy);
   }
 }
