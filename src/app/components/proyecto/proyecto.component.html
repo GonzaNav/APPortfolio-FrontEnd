@@ -10,9 +10,7 @@
       </div>
       <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
         <div class="btn-group me-2" role="group" aria-label="First group">
-          <button type="button" class="btn btn-success rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-nuevo-proyecto">
-            <i class="bi bi-plus-lg"></i>
-          </button>
+          <a type="button" class="btn btn-success rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['proyectos','nuevo'] } }]"><i class="bi bi-plus-lg"></i></a>
         </div>
       </div>
     </div>
@@ -22,9 +20,7 @@
             <h4 class="me-2">{{proyecto.nombreProy}}</h4>
             <div class="btn-toolbar" role="toolbar" *ngIf="isLogged">
               <div class="btn-group me-2 btn-group-sm" role="group" aria-label="First group">
-                <button (click)="obtenerUnProyecto(proyecto.id!)" type="button" class="btn btn-warning rounded-circle">
-                  <i class="bi bi-pencil-fill"></i>
-                </button>
+                <a type="button" class="btn btn-warning rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['proyectos','actualizar', proyecto.id] } }]"><i class="bi bi-pencil-fill"></i></a>
               </div>
               <div class="btn-group btn-group-sm" role="group" aria-label="Second group">
                 <button (click)="borrar(proyecto.id!)" type="button" class="btn btn-danger rounded-circle">
@@ -41,5 +37,3 @@
     </div>
   </div>
 </section>
-<app-nuevo-proyecto></app-nuevo-proyecto>
-<app-actualizar-proyecto [idSeleccionado]="idSeleccionado"></app-actualizar-proyecto>

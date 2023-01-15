@@ -9,9 +9,7 @@
       </div>
       <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
         <div class="btn-group me-2" role="group" aria-label="First group">
-          <button type="button" class="btn btn-success rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-nueva-habilidad">
-            <i class="bi bi-plus-lg"></i>
-          </button>
+          <a type="button" class="btn btn-success rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['skills','nueva'] } }]"><i class="bi bi-plus-lg"></i></a>
         </div>
       </div>
       <div class="row">
@@ -34,9 +32,7 @@
             ></circle-progress>
             <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
               <div class="btn-group me-2 btn-group-sm" role="group" aria-label="First group">
-                <button  type="button" class="btn btn-warning rounded-circle" (click)="obtenerUnaHabilidad(habilidad.id!)">
-                  <i class="bi bi-pencil-fill"></i>
-                </button>
+                <a type="button" class="btn btn-warning rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['skills','actualizar', habilidad.id] } }]"><i class="bi bi-pencil-fill"></i></a>
               </div>
               <div class="btn-group btn-group-sm" role="group" aria-label="Second group">
                 <button type="button" class="btn btn-danger rounded-circle" (click)="borrar(habilidad.id!)">
@@ -69,9 +65,7 @@
               ></circle-progress>
               <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
                 <div class="btn-group me-2 btn-group-sm" role="group" aria-label="First group">
-                  <button  type="button" class="btn btn-warning rounded-circle" (click)="obtenerUnaHabilidad(habilidad.id!)">
-                    <i class="bi bi-pencil-fill"></i>
-                  </button>
+                  <a type="button" class="btn btn-warning rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['skills','actualizar', habilidad.id] } }]"><i class="bi bi-pencil-fill"></i></a>
                 </div>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Second group">
                   <button type="button" class="btn btn-danger rounded-circle" (click)="borrar(habilidad.id!)">
@@ -85,5 +79,3 @@
 
   </div>
 </section>
-<app-nueva-hys></app-nueva-hys>
-<app-actualizar-hys [idSeleccionado]="idSeleccionado"></app-actualizar-hys>

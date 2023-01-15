@@ -15,16 +15,20 @@ export class SkillsComponent implements OnInit {
   formModal: any;
   softSkills : Hys[] = [];
   hardSkills : Hys[] = [];
-  constructor(private sHys : HysService, private tokenService : TokenService, private toastr: ToastrService) {}
+  constructor(private sHys : HysService, private tokenService : TokenService, private toastr: ToastrService) {
+    this.sHys.listen().subscribe({
+      next: () => {
+        this.cargarHabilidadesBlandas();
+        this.cargarHabilidadesFuertes();
+      }
+    });
+  }
 
   isLogged = false;
   idSeleccionado : any = null;
   ngOnInit() : void {
     this.cargarHabilidadesBlandas();
     this.cargarHabilidadesFuertes();
-    /* this.formModal = new window.bootstrap.Modal(
-      document.getElementById('modal-actualizar-habilidad')
-    ); */
     if(this.tokenService.getToken()) {
       this.isLogged = true;
     } else {

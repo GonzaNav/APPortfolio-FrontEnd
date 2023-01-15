@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SEducacionService } from 'src/app/service/s-educacion.service';
 
 @Component({
@@ -13,7 +15,7 @@ export class NuevaEducacionComponent {
   educacionForm: FormGroup;
 
 
-  constructor(private sEducacionService: SEducacionService, private formBuilder: FormBuilder) {
+  constructor(private sEducacionService: SEducacionService, private formBuilder: FormBuilder, private router: Router, private toastr: ToastrService) {
 
     this.educacionForm = this.formBuilder.group({
       nombreEduc: ['', [Validators.required]],
@@ -50,17 +52,24 @@ export class NuevaEducacionComponent {
 
   crearExp():void{
 
-    this.sEducacionService.save(this.educacionForm.value).subscribe(data => {
-      alert("Educacion agregada");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
+    this.sEducacionService.save(this.educacionForm.value).subscribe({
+      next: () => {
+        this.router.navigate(['', { outlets: { modal: null }}]);
+        this.sEducacionService.filter("Update click");
+        this.toastr.success('Educación creada', 'Se creó correctamente');
+      },
+      error: () => {
+        this.toastr.error('Se produjo un error', 'Intente nuevamente');
+      }
     });
   }
 
   clearForm() {
     this.educacionForm.reset({});
+  }
+
+  modalClose(event : any) {
+    this.router.navigate(['', { outlets: { modal: null }}]);
   }
 
 }

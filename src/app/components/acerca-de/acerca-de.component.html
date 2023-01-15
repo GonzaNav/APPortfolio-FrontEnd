@@ -7,14 +7,13 @@
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center">
             <p class="miNombre">{{persona.nombre}} {{persona.apellido}}</p>
             <p>{{persona.titulo}}</p>
+
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 section-title">
             <span>
                 <div class="d-flex justify-content-between flex-wrap align-items-center">
                   <h1>Acerca de <i>Mí</i></h1>
-                  <button (click)="abrirModal(persona.id!)" type="button" class="btn btn-warning rounded-circle" *ngIf="isLogged">
-                    <i class="bi bi-pencil-fill"></i>
-                  </button>
+                  <a type="button" class="btn btn-warning rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['acercade','edit', persona.id] } }]"><i class="bi bi-pencil-fill"></i></a>
                 </div>
                 <p class="tagline">Education is the key to unlock the golden door of freedom.</p>
                 <div>
@@ -31,4 +30,3 @@
     </div>
   </div>
 </section>
-<app-editarinfo [idSeleccionado]="idSeleccionado"></app-editarinfo>

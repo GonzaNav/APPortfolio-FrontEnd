@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SImageService } from 'src/app/service/s-image.service';
 import { SProyectoService } from 'src/app/service/s-proyecto.service';
 
@@ -11,16 +13,7 @@ import { SProyectoService } from 'src/app/service/s-proyecto.service';
 export class ActualizarProyectoComponent implements OnInit {
 
   proyectoForm: FormGroup;
-  @Input('idSeleccionado') selectedId : any = null;
-  ngOnChanges(changes: SimpleChanges) {
-
-    if(this.selectedId) {
-
-      this.setValues();
-    }
-
-  }
-  constructor(private sProyecto: SProyectoService,private formBuilder: FormBuilder, public imgService: SImageService) {
+  constructor(private sProyecto: SProyectoService,private formBuilder: FormBuilder, public imgService: SImageService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService) {
 
     this.proyectoForm = this.formBuilder.group({
       imgProy: ['', [Validators.required]],
@@ -32,6 +25,13 @@ export class ActualizarProyectoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.sProyecto.detail(id).subscribe(data => {
+      this.proyectoForm.patchValue({
+        nombreProy: data.nombreProy,
+        descripcionProy: data.descripcionProy
+      });
+    });
 
   }
 
@@ -47,23 +47,20 @@ export class ActualizarProyectoComponent implements OnInit {
     return this.proyectoForm.get("descripcionProy");
   }
 
-  setValues() {
-    this.sProyecto.detail(this.selectedId).subscribe(data => {
-      this.proyectoForm.patchValue({
-        nombreProy: data.nombreProy,
-        descripcionProy: data.descripcionProy
-      });
-    });
-  }
 
   updateProyecto() : void {
+    const id = this.activatedRoute.snapshot.params['id'];
     this.proyectoForm.patchValue({'imgProy' : this.imgService.url });
-    this.sProyecto.update(this.selectedId, this.proyectoForm.value).subscribe(data => {
-      alert("Proyecto actualizado");
-      this.clearForm();
-      window.location.reload();
-    }, err => {
-      alert("Se ha producido un error, intente nuevamente");
+    this.sProyecto.update(id, this.proyectoForm.value).subscribe({
+      next: () => {
+        this.clearForm();
+        this.router.navigate(['', { outlets: { modal: null }}]);
+        this.sProyecto.filter("Update click");
+        this.toastr.success('Proyecto actualizado', 'Se actualizó correctamente');
+      },
+      error: () => {
+        this.toastr.error('Se produjo un error', 'Intente nuevamente');
+      }
     });
   }
 
@@ -78,7 +75,6 @@ export class ActualizarProyectoComponent implements OnInit {
       this.imgService.subirImagen($event, name.replace(/\s/g, ''), storagePath);
     }
   }
-
 }
 
 
