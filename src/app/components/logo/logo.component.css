@@ -3,12 +3,26 @@
 }
 
 .redes {
-    margin-right: 0.5em;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-right: 0.5em;
 }
 
-.redes img {
-    width: 50px;
-    margin: 0.1em;
+.redes .social-links a{
+  font-size: 18px;
+  display: inline-block;
+  background: #212431;
+  color: #fff;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
 }
 
 .btn {
@@ -21,6 +35,10 @@
 
   .container {
       flex-direction: column;
+  }
+
+  #logoAP {
+    width: 250px;
   }
 
   .redes {

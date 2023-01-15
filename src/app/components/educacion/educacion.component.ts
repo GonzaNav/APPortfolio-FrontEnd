@@ -17,9 +17,9 @@ export class EducacionComponent implements OnInit {
   idSeleccionado : any = null;
   ngOnInit(): void {
     this.cargarEducacion();
-    this.formModal = new window.bootstrap.Modal(
+    /* this.formModal = new window.bootstrap.Modal(
       document.getElementById('modal-actualizar-educacion')
-    );
+    ); */
     if(this.tokenService.getToken()) {
       this.isLogged = true;
     } else {

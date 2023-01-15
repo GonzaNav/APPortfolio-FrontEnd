@@ -24,6 +24,7 @@ export class ActualizarHysComponent implements OnInit {
     this.hysForm = this.formBuilder.group({
       nombreHys: ['', [Validators.required]],
       porcentajeHys: ['', [Validators.required]],
+      tipo: ['', [Validators.required]]
 
     });
 
@@ -41,11 +42,16 @@ export class ActualizarHysComponent implements OnInit {
     return this.hysForm.get("puestoHys");
   }
 
+  get tipo() {
+    return this.hysForm.get("tipo");
+  }
+
   setValues() {
     this.sHys.detail(this.selectedId).subscribe(data => {
       this.hysForm.patchValue({
         nombreHys: data.nombreHys,
-        porcentajeHys: data.porcentajeHys
+        porcentajeHys: data.porcentajeHys,
+        tipo: data.tipo
       });
     });
   }

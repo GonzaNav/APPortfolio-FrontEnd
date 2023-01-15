@@ -26,8 +26,20 @@
               Debe ingresar el porcentaje.
             </div>
           </div>
+          <div class="form-group m-3">
+            <label for="tipo">Tipo</label>
+            <select class="form-select" id="tipo" name="tipo" formControlName="tipo">
+              <option value="soft">Soft</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          <div *ngIf="tipo?.errors && tipo?.touched">
+            <div *ngIf="tipo?.hasError('required')" class="alert alert-danger" role="alert">
+              Debe agregar el tipo.
+            </div>
+          </div>
           <div class="modal-footer">
-            <button type="submit" [disabled]="nombreHys?.hasError('required') || porcentajeHys?.hasError('required')" data-bs-dismiss="modal" class="btn btn-primary">Actualizar</button>
+            <button type="submit" [disabled]="nombreHys?.hasError('required') || porcentajeHys?.hasError('required')" data-bs-dismiss="modal" class="btn btn-warning">Actualizar</button>
           </div>
         </form>
       </div>

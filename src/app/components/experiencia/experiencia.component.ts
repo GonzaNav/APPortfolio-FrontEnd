@@ -19,9 +19,9 @@ export class ExperienciaComponent implements OnInit {
   idSeleccionado : any = null;
   ngOnInit() : void {
     this.cargarExperiencias();
-    this.formModal = new window.bootstrap.Modal(
+    /* this.formModal = new window.bootstrap.Modal(
       document.getElementById('modal-actualizar-experiencia')
-    );
+    ); */
     if(this.tokenService.getToken()) {
       this.isLogged = true;
     } else {

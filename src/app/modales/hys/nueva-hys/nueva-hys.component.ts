@@ -16,6 +16,7 @@ export class NuevaHysComponent implements OnInit {
     this.hysForm = this.formBuilder.group({
       nombreHys: ['', [Validators.required]],
       porcentajeHys: ['', [Validators.required]],
+      tipo: ['', [Validators.required]]
 
     });
    }
@@ -29,6 +30,10 @@ export class NuevaHysComponent implements OnInit {
 
   get porcentajeHys() {
     return this.hysForm.get("porcentajeHys");
+  }
+
+  get tipo() {
+    return this.hysForm.get("tipo");
   }
 
 

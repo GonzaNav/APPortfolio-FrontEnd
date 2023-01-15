@@ -1,8 +1,60 @@
 
+section {
+  padding: 40px 0;
+}
 .proyecto_texto, .proyecto_imagen {
     display: inline-block;
     text-align: justify;
 }
 .img-proyecto {
     box-shadow: 10px 10px 30px black;
+}
+
+section h3 {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+.section-title h1,
+.section-title h2,
+.section-title h3 {
+  text-transform: uppercase;
+  color: #1e1e1e;
+  font-weight: 700;
+  display: inline-block;
+}
+.section-title h1 {
+  font-size: 46px;
+  letter-spacing: -2px;
+  margin: 10px 0px 0px 0px;
+}
+
+.section-title h1 i {
+  font-style: normal;
+  color: #fc6f5c;
+}
+
+.section-title .line-large {
+  width: 75px;
+  background: #fc6f5c;
+  height: 3px;
+  margin: 5px;
+}
+.section-title div span {
+  display: inline-block;
+  color: #cccccc;
+  text-transform: uppercase;
+}
+
+.section-title .tagline {
+  margin-bottom: 0;
+}
+
+@media(max-width: 575px) {
+  .section-title h1 {
+    font-size: 30px;
+  }
+  .section-title .tagline {
+    font-size: 12px;
+  }
 }

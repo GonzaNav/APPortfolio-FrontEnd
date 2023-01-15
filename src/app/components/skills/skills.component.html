@@ -1,75 +1,86 @@
 <section>
   <div class="container">
-      <h1>Hard & Soft Skills</h1>
-      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" *ngIf="isLogged">
+      <div class="section-title text-center">
+        <h1>Hard & Soft <i>Skills</i></h1>
+        <p class="tagline">Education is the key to unlock the golden door of freedom.</p>
+        <div>
+          <span class="line-large"></span>
+        </div>
+      </div>
+      <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
         <div class="btn-group me-2" role="group" aria-label="First group">
           <button type="button" class="btn btn-success rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-nueva-habilidad">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 15px;">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
+            <i class="bi bi-plus-lg"></i>
           </button>
         </div>
       </div>
       <div class="row">
-        <div class="text-center col-sm-4 col-md-4 col-lg-4" *ngFor="let habilidadBlanda of softSkills">
+        <h4>Hard Skills</h4>
+        <div class="d-flex justify-content-center align-items-center flex-wrap">
+          <div *ngFor="let habilidad of hardSkills">
             <circle-progress
-                [percent]="(habilidadBlanda.porcentajeHys)"
-                [radius]="100"
-                [outerStrokeWidth]="16"
+                [percent]="(habilidad.porcentajeHys)"
+                [radius]="70"
+                [outerStrokeWidth]="10"
                 [innerStrokeWidth]="8"
-                [outerStrokeColor]="'#78C000'"
-                [innerStrokeColor]="'#C7E596'"
+                [outerStrokeColor]="'#198754'"
+                [innerStrokeColor]="'#2bc17c'"
                 [animation]="true"
                 [animationDuration]="300"
+                [titleFontSize]="'16'"
+                [subtitle]="(habilidad.nombreHys)"
+                [subtitleColor]="'#000'"
+                [subtitleFontSize]="'18'"
             ></circle-progress>
-            <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups" *ngIf="isLogged">
+            <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
               <div class="btn-group me-2 btn-group-sm" role="group" aria-label="First group">
-                <button  type="button" class="btn btn-warning rounded-circle" (click)="obtenerUnaHabilidad(habilidadBlanda.id!)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 15px;">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                  </svg>
+                <button  type="button" class="btn btn-warning rounded-circle" (click)="obtenerUnaHabilidad(habilidad.id!)">
+                  <i class="bi bi-pencil-fill"></i>
                 </button>
               </div>
               <div class="btn-group btn-group-sm" role="group" aria-label="Second group">
-                <button type="button" class="btn btn-danger rounded-circle" (click)="borrar(habilidadBlanda.id!)">
+                <button type="button" class="btn btn-danger rounded-circle" (click)="borrar(habilidad.id!)">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 15px;">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                   </svg>
                 </button>
               </div>
             </div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="text-center col-sm-4 col-md-4 col-lg-4" *ngFor="let habilidadDura of hardSkills">
-            <circle-progress
-                [percent]="(habilidadDura.porcentajeHys)"
-                [radius]="100"
-                [outerStrokeWidth]="16"
-                [innerStrokeWidth]="8"
-                [outerStrokeColor]="'#fc6f5c'"
-                [innerStrokeColor]="'#f5a095'"
-                [animation]="true"
-                [animationDuration]="300"
-            ></circle-progress>
-            <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups" *ngIf="isLogged">
-              <div class="btn-group me-2 btn-group-sm" role="group" aria-label="First group">
-                <button  type="button" class="btn btn-warning" (click)="obtenerUnaHabilidad(habilidadDura.id!)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 15px;">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                  </svg>
-                </button>
+      <div class="row mt-5">
+        <h4>Soft Skills</h4>
+        <div class="d-flex justify-content-center align-items-center flex-wrap">
+          <div *ngFor="let habilidad of softSkills">
+              <circle-progress
+                  [percent]="(habilidad.porcentajeHys)"
+                  [radius]="70"
+                  [outerStrokeWidth]="10"
+                  [innerStrokeWidth]="8"
+                  [outerStrokeColor]="'#fc6f5c'"
+                  [innerStrokeColor]="'#f5a095'"
+                  [animation]="true"
+                  [animationDuration]="300"
+                  [titleFontSize]="'16'"
+                  [subtitle]="(habilidad.nombreHys)"
+                  [subtitleColor]="'#000'"
+                  [subtitleFontSize]="'18'"
+              ></circle-progress>
+              <div class="btn-toolbar justify-content-center" role="toolbar" *ngIf="isLogged">
+                <div class="btn-group me-2 btn-group-sm" role="group" aria-label="First group">
+                  <button  type="button" class="btn btn-warning rounded-circle" (click)="obtenerUnaHabilidad(habilidad.id!)">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                </div>
+                <div class="btn-group btn-group-sm" role="group" aria-label="Second group">
+                  <button type="button" class="btn btn-danger rounded-circle" (click)="borrar(habilidad.id!)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
+                </div>
               </div>
-              <div class="btn-group btn-group-sm" role="group" aria-label="Second group">
-                <button type="button" class="btn btn-danger" (click)="borrar(habilidadDura.id!)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 15px;">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+          </div>
         </div>
-
       </div>
 
   </div>

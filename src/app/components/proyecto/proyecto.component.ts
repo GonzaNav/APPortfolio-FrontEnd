@@ -19,9 +19,9 @@ export class ProyectoComponent implements OnInit {
   idSeleccionado : any = null;
   ngOnInit() : void {
     this.cargarProyectos();
-    this.formModal = new window.bootstrap.Modal(
+    /* this.formModal = new window.bootstrap.Modal(
       document.getElementById('modal-actualizar-proyecto')
-    );
+    ); */
     if(this.tokenService.getToken()) {
       this.isLogged = true;
     } else {
