@@ -15,15 +15,12 @@
                   <h1>Acerca de <i>Mí</i></h1>
                   <a type="button" class="btn btn-warning rounded-circle" *ngIf="isLogged" [skipLocationChange]='true' [routerLink]="['',{ outlets: { modal: ['acercade','edit', persona.id] } }]"><i class="bi bi-pencil-fill"></i></a>
                 </div>
-                <p class="tagline">Education is the key to unlock the golden door of freedom.</p>
+                <p class="tagline">La creatividad es la inteligencia divirtiéndose.</p>
                 <div>
                   <span class="line-large"></span>
                 </div>
-                <p> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</p>
                 <div class="row mt-1">
-                    <p> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                    </p>
+                    <p>{{persona.descripcion}}</p>
                 </div>
             </span>
         </div>
